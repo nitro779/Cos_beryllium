@@ -27,6 +27,9 @@ TARGET_SCREEN_DENSITY := 440
 
 # Kernel
 TARGET_KERNEL_CONFIG := beryllium_defconfig
+KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-gnu-8.2.1/bin
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
+TARGET_KERNEL_SOURCE := kernel/xiaomi/beryllium
 
 # HIDL
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
@@ -38,8 +41,17 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
+# Power
+TARGET_TAP_TO_WAKE_NODE := "/dev/input/event2"
+
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 
 # Inherit from the proprietary version
 -include vendor/xiaomi/beryllium/BoardConfigVendor.mk
+
+# IR
+TARGET_FACE_UNLOCK_CAMERA_ID := 5
+
+# VNDK - disable isolation
+BOARD_VNDK_RUNTIME_DISABLE := true
